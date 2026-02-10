@@ -1,0 +1,40 @@
+{
+  "placeholderImages": [
+    {
+      "id": "gallery-1",
+      "description": "Romantic walk in the park",
+      "imageUrl": "https://images.unsplash.com/photo-1766202511545-17f2b1d6defa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxyb21hbnRpYyUyMHBhcmt8ZW58MHx8fHwxNzcwMTI5ODgzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "romantic park"
+    },
+    {
+      "id": "gallery-2",
+      "description": "Candlelight dinner",
+      "imageUrl": "https://images.unsplash.com/photo-1648032632478-3bef3ec19906?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjYW5kbGVsaWdodCUyMGRpbm5lcnxlbnwwfHx8fDE3NzAxMjk4ODN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "candlelight dinner"
+    },
+    {
+      "id": "gallery-3",
+      "description": "Sunset at the beach",
+      "imageUrl": "https://images.unsplash.com/photo-1610045058619-8c37e8913c55?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxzdW5zZXQlMjBiZWFjaHxlbnwwfHx8fDE3NzAwOTUzNTV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "sunset beach"
+    },
+    {
+      "id": "gallery-4",
+      "description": "Cozy morning coffee",
+      "imageUrl": "https://images.unsplash.com/photo-1517466832364-a428140f1b7d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxtb3JuaW5nJTIwY29mZmVlfGVufDB8fHx8MTc3MDA1MDE5Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "morning coffee"
+    },
+    {
+      "id": "gallery-5",
+      "description": "Winter cabin getaway",
+      "imageUrl": "https://images.unsplash.com/photo-1522043436628-a4bd7867030b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx3aW50ZXIlMjBjYWJpbnxlbnwwfHx8fDE3NzAxMjk4ODN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "winter cabin"
+    },
+    {
+      "id": "gallery-6",
+      "description": "Dancing under the stars",
+      "imageUrl": "https://images.unsplash.com/photo-1696362400142-118081d29f15?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxkYW5jaW5nJTIwc3RhcnN8ZW58MHx8fHwxNzcwMTI5ODgzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "dancing stars"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * APP-WIDE CONFIGURATION & SECURITY PHILOSOPHY
+     * 
+     * Core Philosophy: This ruleset implements a public-facing celebration platform for "Sweet Surprises". 
+     * It prioritizes low-friction engagement (public reads and anonymous submissions) while maintaining 
+     * basic integrity for a prototyping environment.
+     * 
+     * Data Structure: Flat top-level collections for 'birthdayWishes' and 'photos'. This design avoids 
+     * complex nesting to simplify public access and performance.
+     * 
+     * Key Security Decisions:
+     * 1. Public Visibility: Both birthday wishes and the photo gallery are readable by anyone (unauthenticated).
+     * 2. Anonymous Participation: Writing wishes is permitted for any authenticated user (supporting the 
+     *    'anonymous' provider specified in the IR).
+     * 3. Write-Once Policy (Prototyping): Due to the absence of ownership fields (e.g., authorId) in the 
+     *    current schema, updates and deletions are restricted to prevent unauthorized tampering.
+     * 
+     * Denormalization for Authorization: No complex joins are required. Path-to-document ID 
+     * consistency is enforced to ensure relational integrity within the flat structure.
+     */
+
+    // --- Helper Functions ---
+
+    /** 
+     * @description Checks if the request is made by an authenticated user (including anonymous).
+     */
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    /** 
+     * @description Verifies that a document exists before performing an operation.
+     */
+    function isExisting() {
+      return resource != null;
+    }
+
+    // --- Collection Rules ---
+
+    /**
+     * @description Rules for birthday wishes. Allows public viewing and authenticated creation.
+     * @path /birthdayWishes/{birthdayWishId}
+     * @allow get, list: if true; (Public viewing)
+     * @allow create: if isSignedIn(); (Any logged-in/anonymous user can submit)
+     * @deny update, delete: if true; (Blocked due to lack of ownership field in schema)
+     * @principle Validates ID consistency on creation and protects public data from unauthorized edits.
+     */
+    match /birthdayWishes/{birthdayWishId} {
+      allow get, list: if true;
+      allow create: if isSignedIn() && request.resource.data.id == birthdayWishId;
+      
+      // CRITICAL: Cannot implement owner-only writes. The 'BirthdayWish' entity is missing an 'ownerId' or 'authorId' field.
+      allow update, delete: if false; // TODO: Add owner validation once the schema is updated with an ownership field.
+    }
+
+    /**
+     * @description Rules for the photo gallery. Allows public viewing and authenticated uploads.
+     * @path /photos/{photoId}
+     * @allow get, list: if true; (Public gallery access)
+     * @allow create: if isSignedIn(); (Allows users to contribute photos)
+     * @deny update, delete: if true; (Blocked to prevent gallery tampering without clear ownership)
+     * @principle Ensures gallery availability while preventing destructive actions on non-owned assets.
+     */
+    match /photos/{photoId} {
+      allow get, list: if true;
+      allow create: if isSignedIn() && request.resource.data.id == photoId;
+
+      // CRITICAL: Cannot implement owner-only writes. The 'Photo' entity is missing an 'ownerId' or 'creatorId' field.
+      allow update, delete: if false; // TODO: Add owner validation once the schema is updated with an ownership field.
+    }
+  }
+}

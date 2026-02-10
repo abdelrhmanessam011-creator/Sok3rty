@@ -1,0 +1,103 @@
+{
+  "entities": {
+    "BirthdayWish": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "BirthdayWish",
+      "type": "object",
+      "description": "Represents a birthday wish submitted by a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the BirthdayWish entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the person submitting the birthday wish."
+        },
+        "message": {
+          "type": "string",
+          "description": "The actual birthday wish message."
+        },
+        "submissionDate": {
+          "type": "string",
+          "description": "Date and time when the birthday wish was submitted.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "message",
+        "submissionDate"
+      ]
+    },
+    "Photo": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Photo",
+      "type": "object",
+      "description": "Represents a photo in the photo gallery.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Photo entity."
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "URL of the image.",
+          "format": "uri"
+        },
+        "caption": {
+          "type": "string",
+          "description": "Optional caption for the photo."
+        }
+      },
+      "required": [
+        "id",
+        "imageUrl"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/birthdayWishes/{birthdayWishId}",
+        "definition": {
+          "entityName": "BirthdayWish",
+          "schema": {
+            "$ref": "#/backend/entities/BirthdayWish"
+          },
+          "description": "Stores birthday wishes submitted by users.",
+          "params": [
+            {
+              "name": "birthdayWishId",
+              "description": "Unique identifier for the birthday wish."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/photos/{photoId}",
+        "definition": {
+          "entityName": "Photo",
+          "schema": {
+            "$ref": "#/backend/entities/Photo"
+          },
+          "description": "Stores photos for the photo gallery.",
+          "params": [
+            {
+              "name": "photoId",
+              "description": "Unique identifier for the photo."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed to store birthday wishes and photos for the Sweet Surprises application. It prioritizes simplicity and security, adhering to the principles of Authorization Independence, Clarity of Intent, and homogeneous security posture. The structure is designed to ensure QAPs are achieved, rules are not filters, and data invariants are maintained.\n\n*   `/birthdayWishes`: This collection stores all birthday wishes submitted by users. Because there is no concept of private wishes, this collection can be flat. Since all wishes can be considered public, no authentication is required for reading, and the app may consider rate-limiting writes on the client or server.\n*   `/photos`: This collection stores photos for the gallery.  Like birthday wishes, photos are public and need no user authentication. Rate limiting may be implemented here as well to reduce abuse.\n\nThis structure inherently achieves Authorization Independence because there is no parent/child relationship and no `get()` calls are needed for authorization rules. All list operations are secure because all documents within each collection share the same security requirements (homogenous security posture).  The structure also uses explicit naming conventions for clarity and predictability."
+  }
+}
